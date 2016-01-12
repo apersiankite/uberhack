@@ -11,5 +11,12 @@ public class ConstantUtils {
         public static final String CLIENT_SECRET = "hih1N8g_cAQyUbZdtR7Q7W3Dmqaxn5yOhstrwZXD";
     }
 
+    public static final String ACCESS_TOKEN = "access_token";
+    public static final String UBER_PRODUCT = "uber_product";
+
+    public static class URL {
+        public static final String BASE_URL = "";
+        public static final String VERIFY_PHONE = BASE_URL + "/users/add_phone";
+    }
 
 }

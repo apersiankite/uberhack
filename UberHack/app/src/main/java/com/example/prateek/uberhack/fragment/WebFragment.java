@@ -12,6 +12,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.example.prateek.uberhack.R;
+import com.example.prateek.uberhack.listener.OnLoginSuccessListener;
+import com.example.prateek.uberhack.network.JavaScriptInterface;
 import com.example.prateek.uberhack.util.IntentUtil;
 
 /**
@@ -21,12 +23,27 @@ public class WebFragment extends Fragment {
 
     private View rootLayout;
     private WebView webView = null;
+    private View progressView;
+    private OnLoginSuccessListener loginSuccessListener;
+
+    public void setLoginSuccessListener(OnLoginSuccessListener loginSuccessListener) {
+        this.loginSuccessListener = loginSuccessListener;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootLayout = inflater.inflate(R.layout.fragment_web,container,false);
+        rootLayout = inflater.inflate(R.layout.fragment_web, container, false);
+        progressView = rootLayout.findViewById(R.id.layout_progress);
+
         webView = (WebView) rootLayout.findViewById(R.id.webView);
+        webView.clearHistory();
+        webView.addJavascriptInterface(new JavaScriptInterface(loginSuccessListener),"JSInterface");
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
+
         WebViewClient webViewClient = new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -37,11 +54,15 @@ public class WebFragment extends Fragment {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                Log.d("prateek", "onPageFinished");
+                progressView.setVisibility(View.GONE);
             }
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
+                Log.d("prateek","onPageStarted");
+                progressView.setVisibility(View.VISIBLE);
             }
         };
         webView.setWebViewClient(webViewClient);

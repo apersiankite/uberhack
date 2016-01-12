@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">UberHack</string>
+    <string-array name="uber_products">
+        <item>UberGo</item>
+        <item>UberX</item>
+        <item>UberBlack</item>
+        <item>Any</item>
+    </string-array>
 </resources>

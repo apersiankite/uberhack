@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.prateek.uberhack.R;
+import com.example.prateek.uberhack.util.AppUtil;
+import com.example.prateek.uberhack.util.ConstantUtils;
 
 /**
  * Created by Prateek on 12/01/16.
@@ -23,12 +25,18 @@ public class GPSTrackerActivity extends AppCompatActivity implements LocationLis
 
     private LocationManager mLocationManager;
     private View progressView;
+    private String uberProductType = "Any";
     private final String phoneNumber = "+14134183825";
+//    private final String phoneNumber = "+918096781948";     //testing
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_track);
+        if(AppUtil.getNullCheck(getIntent().getStringExtra(ConstantUtils.UBER_PRODUCT))) {
+            uberProductType = getIntent().getStringExtra(ConstantUtils.UBER_PRODUCT);
+        }
         progressView = findViewById(R.id.layout_progress);
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -82,7 +90,7 @@ public class GPSTrackerActivity extends AppCompatActivity implements LocationLis
     private void sendSMS(double lat, double lng){
         Uri uri = Uri.parse("smsto:"+phoneNumber);
         Intent it = new Intent(Intent.ACTION_SENDTO, uri);
-        it.putExtra("sms_body", "Lat : "+lat+", Lng : "+lng);
+        it.putExtra("sms_body", "Type:book,Lat:"+lat+",Lng:"+lng+",Product:"+uberProductType);
         startActivity(it);
         mLocationManager.removeUpdates(this);
         finish();

@@ -9,6 +9,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.StringRequest;
 
 /**
  * Created by Prateek on 12/01/16.
@@ -36,6 +37,12 @@ public class RequestManager {
         request.setTag(tag);
         mRequestQueue.add(request);
     }
+
+    public  void addRequest(StringRequest request, String tag) {
+        request.setTag(tag);
+        mRequestQueue.add(request);
+    }
+
 
     public void cancelAll(String tag) {
         mRequestQueue.cancelAll(tag);
