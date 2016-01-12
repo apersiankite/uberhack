@@ -1,7 +1,9 @@
-package com.example.prateek.uberhack;
+package com.example.prateek.uberhack.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import com.example.prateek.uberhack.R;
 
 public class MainActivity extends AppCompatActivity {
 
